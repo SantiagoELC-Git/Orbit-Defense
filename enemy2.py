@@ -5,7 +5,7 @@ import math
 class Enemy(pg.sprite.Sprite):
     # constants 
     AU = 1       # AU in meters
-    G = 1      # gravitational constant
+    G =  6.67e-11    # gravitational constant
     TIMESTEP = 1    # 1 day per update in seconds
     SCALE = 1        # 1 pixel = 1e9 meters
 

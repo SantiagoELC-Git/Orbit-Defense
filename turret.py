@@ -1,5 +1,6 @@
 import pygame as pg
 import constants as c
+import math
 
 class Turret(pg.sprite.Sprite):
     def __init__(self, image, tile_x, tile_y):
@@ -16,6 +17,8 @@ class Turret(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
 
+        self.target = None
+
         # transparent circle for range
         self.range_image = pg.Surface((self.range*2, self.range*2))
         self.range_image.fill((0, 0, 0))
@@ -29,3 +32,19 @@ class Turret(pg.sprite.Sprite):
         surface.blit(self.image, self.rect)
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
+
+    #def update(enemy_group):
+
+
+    def pick_target(self, enermy_group):
+        # find an enemy to target
+        x_dist = 0
+        y_dist = 0
+        # check distance to each enemy to see if it's in range
+        for enemy in enermy_group:
+            x_dist = enemy.pos[0] - self.x
+            y_dist = enemy.pos[1] - self.y
+            dist = math.sqrt(x_dist**2 + y_dist**2)
+            if dist <= self.range:
+                self.target = enemy
+

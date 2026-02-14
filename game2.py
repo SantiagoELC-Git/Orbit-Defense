@@ -1,6 +1,6 @@
 import pygame as pg
 import json
-from enemy import Enemy
+from enemy2 import Enemy, Planet
 from world import World
 from turret import Turret
 from buttons import Button

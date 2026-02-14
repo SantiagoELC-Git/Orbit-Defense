@@ -57,9 +57,6 @@ while run:
     # draw enemy path
     pg.draw.lines(screen, 'black', False, waypoints)
 
-    # update groups
-    enemy_group.update()
-
     # draw groups
     enemy_group.draw(screen)
     turret_group.draw(screen)

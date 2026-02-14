@@ -3,9 +3,8 @@ from pygame import Vector2
 import math
 
 class Enemy(pg.sprite.Sprite):
-    def __init__(self, waypoints, mass, image):
+    def __init__(self, waypoints, image):
         pg.sprite.Sprite.__init__(self)
-        self.mass = mass
         self.waypoints = waypoints
         self.pos = Vector2(self.waypoints[0])
         self.target_waypoint = 1

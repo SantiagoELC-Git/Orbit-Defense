@@ -98,5 +98,6 @@ class Planet:
     def __init__(self, x, y, mass):
         self.x = x
         self.y = y
+
         self.mass = mass                # in kg
 

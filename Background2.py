@@ -15,6 +15,11 @@ Screen_dim = (900, 600)
 
 # Setting up the Screen
 screen = pg.display.set_mode(Screen_dim)
+pg.display.set_caption("Orbit Defense")
+
+# game stuff
+placing_turrets = False
+selected_turret = None
 
 # Images 
 
@@ -26,7 +31,12 @@ cursor_turret1 = pg.image.load('Pixel-Art/Turrets/turret_placeholder.png').conve
 # enemies
 meteor1_img = pg.image.load('Pixel-Art/Enemies/meteor1.png').convert_alpha()
 # buttons
+buy_heisenberg_img = pg.image.load('Pixel-Art/Buttons/HEISENBERG.png').convert_alpha()
+cancel_button_img = pg.image.load('Pixel-Art/Buttons/Cancel_Button.png').convert_alpha()
 
+# load json data for level
+with open('Pixel-Art/Background/placeable_area.tmj') as file:
+    world_data = json.load(file)
 
 # Earth
 earth = pg.image.load('Pixel-Art/Background/Earth.png')
@@ -60,10 +70,29 @@ def create_turret(mouse_pos):
     mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
     mouse_tile_y = mouse_pos[1] // c.TILE_SIZE
     # Calculate the sequential tile number
-    #mouse_tile_num = 
-    turret = Turret(cursor_turret1, mouse_pos)
-    turret_group.add(turret)
+    mouse_tile_num = (mouse_tile_y * c.COLS) + mouse_tile_x
+    # check if that tile is placeable or not
+    if world.tile_map[mouse_tile_num] != 0:
+        # check that there isn't already a turret there
+        space_is_free = True
+        for turret in turret_group:
+            if (mouse_tile_x, mouse_tile_y) == (turret.tile_x, turret.tile_y):
+                space_is_free = False
+        # if the space is free, create a turret there
+        if space_is_free == True:
+            turret = Turret(cursor_turret1, mouse_tile_x, mouse_tile_y)
+            turret_group.add(turret)
 
+def select_turret(mouse_pos):
+    mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
+    mouse_tile_y = mouse_pos[1] // c.TILE_SIZE
+    for turret in turret_group:
+        if (mouse_tile_x, mouse_tile_y) == (turret.tile_x, turret.tile_y):
+            return turret
+
+def clear_selection():
+    for turret in turret_group:
+        turret.selected = False
 
 # create groups
 enemy_group = pg.sprite.Group()

@@ -16,11 +16,15 @@ pg.display.set_caption("Orbit Defense")
 
 # Load images
 # map
-map_img = pg.image.load('Assets/Background/space_background_mcgill.png').convert_alpha()
+map_img = pg.image.load('Pixel-Art/Background/space.png').convert_alpha()
 # individual turrent image under cursor
-cursor_turret1 = pg.image.load('Assets/Turrets/turret_placeholder.png').convert_alpha()
+cursor_turret1 = pg.image.load('Pixel-Art/Turrets/turret_placeholder.png').convert_alpha()
 # enemies
-meteor1_img = pg.image.load('Assets/Enemies/meteor1.png').convert_alpha()
+meteor1_img = pg.image.load('Pixel-Art/Enemies/meteor1.png').convert_alpha()
+
+def create_turret(mouse_pos):
+    turret = Turret(cursor_turret1, mouse_pos)
+    turret_group.add(turret)
 
 # create world
 world = World(map_img)
@@ -68,8 +72,9 @@ while run:
         # mouse click
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             mouse_pos = pg.mouse.get_pos()
-            turret = Turret(cursor_turret1, mouse_pos)
-            turret_group.add(turret)
+            # check if mouse is within bounds of the screen
+            if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
+                create_turret(mouse_pos)
 
     # Update the display
     pg.display.flip()

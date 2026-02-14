@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3e9c58edf41dc0a409a2035e8e977073efcb8b35
 import pygame as pg
 from pygame import Vector2
 import math
@@ -99,3 +102,7 @@ class Planet:
     def __init__(self, x, y, mass):
         self.x = x
         self.y = y
+<<<<<<< HEAD
+=======
+        self.mass = mass                # in kg
+>>>>>>> 3e9c58edf41dc0a409a2035e8e977073efcb8b35

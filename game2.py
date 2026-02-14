@@ -1,6 +1,6 @@
 import pygame as pg
 import json
-from enemy import Enemy
+from enemy2 import Enemy, Planet
 from world import World
 from turret import Turret
 from buttons import Button
@@ -77,6 +77,11 @@ heisenberg_button = Button(c.SCREEN_WIDTH + 100, 50, buy_heisenberg_img)
 cancel_button = Button(c.SCREEN_WIDTH + 50, 180, cancel_button_img) 
 
 
+planet = Planet(c.SCREEN_WIDTH // 2, c.SCREEN_HEIGHT // 2, mass=1000)
+# planet1 = Planet(c.SCREEN_WIDTH - 300, c.SCREEN_HEIGHT // 2, mass=1000)
+
+celestial_objects = [planet]
+
 waypoints = [
     (100, 200),
     (300, 100),
@@ -84,7 +89,17 @@ waypoints = [
     (67, 67)
 ]
 
-meteor1 = Enemy(waypoints, meteor1_img)
+meteor1 = Enemy(waypoints, meteor1_img, 1.0)
+
+
+# Give perpendicular velocity for circular orbit
+# r_pixels = 200
+# r_meters = r_pixels * Enemy.SCALE
+# v_circular = math.sqrt(Enemy.G * planet.mass / r_meters)
+
+# Convert m/s → pixels per frame
+# meteor1.vel = Vector2(0, -v_circular / Enemy.SCALE)
+
 enemy_group.add(meteor1)
 
 # Makes game run

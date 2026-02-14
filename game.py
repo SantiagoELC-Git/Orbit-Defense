@@ -15,12 +15,13 @@ clock = pg.time.Clock()
 screen = pg.display.set_mode((c.SCREEN_WIDTH + c.SIDE_PANEL, c.SCREEN_HEIGHT))
 pg.display.set_caption("Orbit Defense")
 
-# placing turrets
+# game stuff
 placing_turrets = False
+selected_turret = None
 
 # Load images
 # map
-map_img = pg.image.load('Pixel-Art/Background/space.png').convert_alpha()
+map_img = pg.image.load('Pixel-Art/Background/full_background.png').convert_alpha()
 # individual turrent image under cursor
 cursor_turret1 = pg.image.load('Pixel-Art/Turrets/turret_placeholder.png').convert_alpha()
 # enemies
@@ -36,6 +37,15 @@ def create_turret(mouse_pos):
     #mouse_tile_num = 
     turret = Turret(cursor_turret1, mouse_pos)
     turret_group.add(turret)
+
+def select_turret(mouse_pos):
+    mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
+    mouse_tile_y = mouse_pos[1] // c.TILE_SIZE
+    return turret
+
+def clear_selection():
+    for turret in turret_group:
+        turret.selected = False
 
 # create world
 world = World(map_img)
@@ -71,6 +81,11 @@ while run:
 
     # update groups
     enemy_group.update()
+    turret_group.update()
+
+    # highlighting slected turret
+    if selected_turret:
+        selected_turret.selected = True
 
     #####
     # Drawing
@@ -114,8 +129,13 @@ while run:
             mouse_pos = pg.mouse.get_pos()
             # check if mouse is within bounds of the screen
             if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
+                # clear selected turret if you click within play area
+                selected_turret = None
+                clear_selection()
                 if placing_turrets == True:
                     create_turret(mouse_pos)
+                else:
+                    selected_turret = select_turret(mouse_pos)
 
     # Update the display
     pg.display.flip()

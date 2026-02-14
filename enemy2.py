@@ -4,10 +4,10 @@ import math
 
 class Enemy(pg.sprite.Sprite):
     # constants 
-    AU = 1.496e11         # AU in meters
-    G = 6.6743e-11        # gravitational constant
-    TIMESTEP = 3600*24    # 1 day per update in seconds
-    SCALE = 1e9           # 1 pixel = 1e9 meters
+    AU = 1       # AU in meters
+    G = 1      # gravitational constant
+    TIMESTEP = 1    # 1 day per update in seconds
+    SCALE = 1        # 1 pixel = 1e9 meters
 
 
     def __init__(self, waypoints, image, mass):

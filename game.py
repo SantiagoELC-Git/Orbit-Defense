@@ -99,13 +99,11 @@ while run:
 
     # update groups
     enemy_group.update()
-    turret_group.update()
+    turret_group.update(enemy_group)
 
     # highlighting slected turret
     if selected_turret:
         selected_turret.selected = True
-    
-    print(turret_group)
 
     #####
     # Drawing

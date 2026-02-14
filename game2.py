@@ -49,9 +49,9 @@ cancel_button = Button(c.SCREEN_WIDTH + 50, 180, cancel_button_img)
 
 
 planet = Planet(c.SCREEN_WIDTH // 2, c.SCREEN_HEIGHT // 2, mass=1000)
-# planet1 = Planet(c.SCREEN_WIDTH - 300, c.SCREEN_HEIGHT // 2, mass=1000)
+planet1 = Planet(c.SCREEN_WIDTH - 300, c.SCREEN_HEIGHT // 2, mass=1000)
 
-celestial_objects = [planet]
+celestial_objects = [planet, planet1]
 
 waypoints = [
     (100, 200),
@@ -60,7 +60,7 @@ waypoints = [
     (67, 67)
 ]
 
-meteor1 = Enemy(waypoints, meteor1_img, 1.0)
+meteor1 = Enemy(waypoints, meteor1_img, 100)
 
 
 # Give perpendicular velocity for circular orbit

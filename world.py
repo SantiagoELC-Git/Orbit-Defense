@@ -5,4 +5,4 @@ class World():
         self.image = map_img
     
     def draw(self, surface):
-        surface.blit(self.image, (0, 0))
+        surface.blit(self.image, (600, 600))

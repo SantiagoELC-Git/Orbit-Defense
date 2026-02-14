@@ -1,6 +1,7 @@
 import pygame as pg
 from enemy import Enemy
 from world import World
+from turret import Turret
 import constants as c
 
 # Initialize Pygame
@@ -16,6 +17,8 @@ pg.display.set_caption("Orbit Defense")
 # Load images
 # map
 map_img = pg.image.load('Assets/Background/space_background_mcgill.png').convert_alpha()
+# individual turrent image under cursor
+cursor_turret1 = pg.image.load('Assets/Turrets/turret_placeholder.png').convert_alpha()
 # enemies
 meteor1_img = pg.image.load('Assets/Enemies/meteor1.png').convert_alpha()
 
@@ -24,6 +27,7 @@ world = World(map_img)
 
 # create groups
 enemy_group = pg.sprite.Group()
+turret_group = pg.sprite.Group()
 
 waypoints = [
     (100, 200),
@@ -54,12 +58,19 @@ while run:
 
     # draw groups
     enemy_group.draw(screen)
+    turret_group.draw(screen)
 
     #event handler
     for event in pg.event.get():
         #quit game
         if event.type == pg.QUIT:
             run = False
+        # mouse click
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            mouse_pos = pg.mouse.get_pos()
+            turret = Turret(cursor_turret1, mouse_pos)
+            turret_group.add(turret)
+
     # Update the display
     pg.display.flip()
 # Quit Pygame

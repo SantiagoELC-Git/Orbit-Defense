@@ -15,6 +15,9 @@ clock = pg.time.Clock()
 screen = pg.display.set_mode((c.SCREEN_WIDTH + c.SIDE_PANEL, c.SCREEN_HEIGHT))
 pg.display.set_caption("Orbit Defense")
 
+# placing turrets
+placing_turrets = False
+
 # Load images
 # map
 map_img = pg.image.load('Pixel-Art/Background/space.png').convert_alpha()
@@ -83,14 +86,23 @@ while run:
 
     # draw groups
     enemy_group.draw(screen)
-    turret_group.draw(screen)
+    for turret in turret_group:
+        turret.draw(screen)
 
     # draw buttons
     # button for placing turrets
     if heisenberg_button.draw(screen):
-        print ("heisenberg button clicked")
-    if cancel_button.draw(screen):
-        print("cancel button clicked")
+        placing_turrets = True
+    # if placing turrets, show the cancel button
+    if placing_turrets == True:
+        # shower turret under cursor
+        cursor_rect = cursor_turret1.get_rect()
+        cursor_pos = pg.mouse.get_pos()
+        cursor_rect.center = cursor_pos
+        if cursor_pos[0] < c.SCREEN_WIDTH:
+            screen.blit(cursor_turret1, cursor_rect)
+        if cancel_button.draw(screen):
+            placing_turrets = False
 
     #event handler
     for event in pg.event.get():
@@ -102,7 +114,8 @@ while run:
             mouse_pos = pg.mouse.get_pos()
             # check if mouse is within bounds of the screen
             if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
-                create_turret(mouse_pos)
+                if placing_turrets == True:
+                    create_turret(mouse_pos)
 
     # Update the display
     pg.display.flip()

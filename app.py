@@ -25,23 +25,23 @@ scal_pluto = pg.transform.scale(pluto, (60,60))
 
 # Jupiter 
 Jupiter = pg.image.load("Pixel-Art/Background/Jupiter.png")
-scal_Jupiter = pg.transform.scale(Jupiter,(400,400))
+scal_Jupiter = pg.transform.scale(Jupiter,(200,200))
 
 # Mars 
 Mars = pg.image.load("Pixel-Art/Background/Mars.png")
-scal_mars = pg.transform.scale(Mars,(200,200))
+scal_mars = pg.transform.scale(Mars,(100,100))
 
 # Uranus 
 Uranus = pg.image.load("Pixel-Art/Background/Uranus.png")
-scal_uranus = pg.transform.scale(Uranus, (200,200))
+scal_uranus = pg.transform.scale(Uranus, (150,150))
 
 # Saturn
 Saturn = pg.image.load("Pixel-Art/Background/Saturn.png")
-scal_Saturn = pg.transform.scale(Saturn, (200, 200))
+scal_Saturn = pg.transform.scale(Saturn, (150, 150))
 
 # Neptune 
 Neptune = pg.image.load("Pixel-Art/Background/Neptune.png")
-scal_Neptune = pg.transform.scale(Neptune,(200,200))
+scal_Neptune = pg.transform.scale(Neptune,(150,150))
 
 running = True
 clock = pg.time.Clock()
@@ -58,22 +58,22 @@ while running:
     screen.blit(scal_earth, (800, 500))
 
     # Drawing Pluto
-    screen.blit(scal_pluto, (60,50))
+    screen.blit(scal_pluto, (50,25))
 
     # Drawing Jupiter
-    screen.blit(scal_Jupiter, (200,200))
+    screen.blit(scal_Jupiter, (500,150))
 
     # Drawing Mars
-    screen.blit(scal_mars, (200,200))
+    screen.blit(scal_mars, (650,400))
 
     # Drawing Uranus 
-    screen.blit(scal_uranus, (200,200))
+    screen.blit(scal_uranus, (200,250))
 
     # Drawing Saturn
-    screen.blit(scal_Saturn, (200,200))
+    screen.blit(scal_Saturn, (300,400))
 
     # Drawing Neptune
-    screen.blit(scal_Neptune, (200,200))
+    screen.blit(scal_Neptune, (100,100))
 
     # Update the display
     pg.display.flip()

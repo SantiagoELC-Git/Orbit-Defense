@@ -21,6 +21,13 @@ screen = pg.display.set_mode(Screen_dim)
 # Load and rescale the background image
 space_background = pg.image.load('Pixel-Art/Background/space.png')
 scal_space_background = pg.transform.scale(space_background, Screen_dim).convert()
+# individual turrent image under cursor
+cursor_turret1 = pg.image.load('Pixel-Art/Turrets/turret_placeholder.png').convert_alpha()
+# enemies
+meteor1_img = pg.image.load('Pixel-Art/Enemies/meteor1.png').convert_alpha()
+# buttons
+buy_heisenberg_img = pg.image.load('Pixel-Art/Buttons/HEISENBERG.png').convert_alpha()
+cancel_button_img = pg.image.load('Pixel-Art/Buttons/Cancel_Button.png').convert_alpha()
 
 # Earth
 earth = pg.image.load('Pixel-Art/Background/Earth.png')
@@ -49,6 +56,13 @@ scal_Saturn = pg.transform.scale(Saturn, (150, 150))
 # Neptune 
 Neptune = pg.image.load("Pixel-Art/Background/Neptune.png")
 scal_Neptune = pg.transform.scale(Neptune,(150,150))
+
+planet = Planet(c.SCREEN_WIDTH // 2, c.SCREEN_HEIGHT // 2, mass=1000)
+# planet1 = Planet(c.SCREEN_WIDTH - 300, c.SCREEN_HEIGHT // 2, mass=1000)
+
+celestial_objects = [planet]
+
+
 
 running = True
 clock = pg.time.Clock()

@@ -3,8 +3,9 @@ from pygame import Vector2
 import math
 
 class Enemy(pg.sprite.Sprite):
-    def __init__(self, waypoints, image):
+    def __init__(self, waypoints, mass, image):
         pg.sprite.Sprite.__init__(self)
+        self.mass = mass
         self.waypoints = waypoints
         self.pos = Vector2(self.waypoints[0])
         self.target_waypoint = 1
@@ -14,10 +15,13 @@ class Enemy(pg.sprite.Sprite):
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+
     
     def update(self):
         self.move()
         self.rotate()
+
+    
 
     def move(self):
         # define the target waypoint

@@ -23,8 +23,11 @@ selected_turret = None
 # Load images
 # map
 map_img = pg.image.load('Pixel-Art/Background/full_background.png').convert_alpha()
+# turret spreadsheets
+turretmk1_sheet = pg.image.load('Pixel-Art/Turrets/turret_01_mk1_sheet.png').convert_alpha()
+
 # individual turrent image under cursor
-cursor_turret1 = pg.image.load('Pixel-Art/Turrets/turret_placeholder.png').convert_alpha()
+cursor_turret1 = pg.image.load('Pixel-Art/Turrets/turret_01_mk1.png').convert_alpha()
 # enemies
 meteor1_img = pg.image.load('Pixel-Art/Enemies/meteor1.png').convert_alpha()
 # buttons
@@ -50,7 +53,7 @@ def create_turret(mouse_pos):
                 space_is_free = False
         # if the space is free, create a turret there
         if space_is_free == True:
-            turret = Turret(cursor_turret1, mouse_tile_x, mouse_tile_y)
+            turret = Turret(turretmk1_sheet, mouse_tile_x, mouse_tile_y)
             turret_group.add(turret)
 
 def select_turret(mouse_pos):

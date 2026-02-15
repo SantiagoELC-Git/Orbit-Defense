@@ -10,3 +10,4 @@ FPS = 60
 
 # turret constants
 ANIMATION_STEPS = 8
+ANIMATION_DELAY = 15

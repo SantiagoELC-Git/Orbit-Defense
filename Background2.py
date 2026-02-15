@@ -6,16 +6,16 @@ from buttons import Button
 import constants as c
 from world import World
 import json
+import constants as c
 
 
 # Initialize Pygame
 pg.init()
 
-# Setting screen dimensions
-Screen_dim = (900, 600)
-
 # Setting up the Screen
-screen = pg.display.set_mode(Screen_dim)
+background_width = c.SCREEN_WIDTH + c.SIDE_PANEL
+background_height = c.SCREEN_HEIGHT
+screen = pg.display.set_mode((background_width, background_height))
 pg.display.set_caption("Orbit Defense")
 
 # game stuff
@@ -26,7 +26,7 @@ selected_turret = None
 
 # Load and rescale the background image
 space_background = pg.image.load('Pixel-Art/Background/space.png')
-scal_space_background = pg.transform.scale(space_background, Screen_dim).convert()
+scal_space_background = pg.transform.scale(space_background, (c.SCREEN_WIDTH, c.SCREEN_HEIGHT)).convert()
 # individual turrent image under cursor
 cursor_turret1 = pg.image.load('Pixel-Art/Turrets/turret_placeholder.png').convert_alpha()
 # enemies
@@ -198,7 +198,7 @@ while running:
     for event in pg.event.get():
         #quit game
         if event.type == pg.QUIT:
-            run = False
+            running = False
         # mouse click
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             mouse_pos = pg.mouse.get_pos()

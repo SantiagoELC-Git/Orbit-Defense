@@ -82,6 +82,10 @@ class Enemy(pg.sprite.Sprite):
         else:
             # enemy had reach the end of the path, so we remove it from the game
             self.kill()
+    def collision(self):
+        
+
+        
 
     def rotate(self):
         # calculate distance to next waypoint

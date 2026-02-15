@@ -39,33 +39,34 @@ cancel_button_img = pg.image.load('Pixel-Art/Buttons/Cancel_Button.png').convert
 with open('Pixel-Art/Background/placeable_area.tmj') as file:
     world_data = json.load(file)
 
-# Earth
-earth = pg.image.load('Pixel-Art/Background/Earth.png')
-scal_earth = pg.transform.scale(earth,(150,150))
 
-# Pluto 
-pluto = pg.image.load("Pixel-Art/Background/Pluto.png")
-scal_pluto = pg.transform.scale(pluto, (60,60))
+    earth = pg.image.load('Pixel-Art/Background/Earth.png')
+    scal_earth = pg.transform.scale(earth,(150,150))
 
-# Jupiter 
-Jupiter = pg.image.load("Pixel-Art/Background/Jupiter.png")
-scal_Jupiter = pg.transform.scale(Jupiter,(200,200))
+    # Pluto 
+    pluto = pg.image.load("Pixel-Art/Background/Pluto.png")
+    scal_pluto = pg.transform.scale(pluto, (60,60))
 
-# Mars 
-Mars = pg.image.load("Pixel-Art/Background/Mars.png")
-scal_mars = pg.transform.scale(Mars,(100,100))
+    # Jupiter 
+    Jupiter = pg.image.load("Pixel-Art/Background/Jupiter.png")
+    scal_Jupiter = pg.transform.scale(Jupiter,(200,200))
 
-# Uranus 
-Uranus = pg.image.load("Pixel-Art/Background/Uranus.png")
-scal_uranus = pg.transform.scale(Uranus, (150,150))
+    # Mars 
+    Mars = pg.image.load("Pixel-Art/Background/Mars.png")
+    scal_mars = pg.transform.scale(Mars,(100,100))
 
-# Saturn
-Saturn = pg.image.load("Pixel-Art/Background/Saturn.png")
-scal_Saturn = pg.transform.scale(Saturn, (150, 150))
+    # Uranus 
+    Uranus = pg.image.load("Pixel-Art/Background/Uranus.png")
+    scal_uranus = pg.transform.scale(Uranus, (150,150))
 
-# Neptune 
-Neptune = pg.image.load("Pixel-Art/Background/Neptune.png")
-scal_Neptune = pg.transform.scale(Neptune,(150,150))
+    # Saturn
+    Saturn = pg.image.load("Pixel-Art/Background/Saturn.png")
+    scal_Saturn = pg.transform.scale(Saturn, (150, 150))
+
+    # Neptune 
+    Neptune = pg.image.load("Pixel-Art/Background/Neptune.png")
+    scal_Neptune = pg.transform.scale(Neptune,(150,150))
+
 
 def create_turret(mouse_pos):
     mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
@@ -147,6 +148,7 @@ while running:
     # highlighting slected turret
     if selected_turret:
         selected_turret.selected = True
+
 
     # Draw the Earth
     screen.blit(scal_earth, (800, 500))

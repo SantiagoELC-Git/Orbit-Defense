@@ -1,11 +1,11 @@
 import pygame as pg
-from enemy2 import Enemy, Planet
+from enemyREAL import Enemy, Planet
 from world import World
 from turret import Turret
 from buttons import Button
 import constants as c
-from enemyREAL import Enemy, Planet
 from world import World
+import json
 
 
 # Initialize Pygame
@@ -16,6 +16,11 @@ Screen_dim = (900, 600)
 
 # Setting up the Screen
 screen = pg.display.set_mode(Screen_dim)
+pg.display.set_caption("Orbit Defense")
+
+# game stuff
+placing_turrets = False
+selected_turret = None
 
 # Images 
 
@@ -27,7 +32,12 @@ cursor_turret1 = pg.image.load('Pixel-Art/Turrets/turret_placeholder.png').conve
 # enemies
 meteor1_img = pg.image.load('Pixel-Art/Enemies/meteor1.png').convert_alpha()
 # buttons
+buy_heisenberg_img = pg.image.load('Pixel-Art/Buttons/HEISENBERG.png').convert_alpha()
+cancel_button_img = pg.image.load('Pixel-Art/Buttons/Cancel_Button.png').convert_alpha()
 
+# load json data for level
+with open('Pixel-Art/Background/placeable_area.tmj') as file:
+    world_data = json.load(file)
 
 # Earth
 earth = pg.image.load('Pixel-Art/Background/Earth.png')
@@ -61,15 +71,41 @@ def create_turret(mouse_pos):
     mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
     mouse_tile_y = mouse_pos[1] // c.TILE_SIZE
     # Calculate the sequential tile number
-    #mouse_tile_num = 
-    turret = Turret(cursor_turret1, mouse_pos)
-    turret_group.add(turret)
+    mouse_tile_num = (mouse_tile_y * c.COLS) + mouse_tile_x
+    # check if that tile is placeable or not
+    if world.tile_map[mouse_tile_num] != 0:
+        # check that there isn't already a turret there
+        space_is_free = True
+        for turret in turret_group:
+            if (mouse_tile_x, mouse_tile_y) == (turret.tile_x, turret.tile_y):
+                space_is_free = False
+        # if the space is free, create a turret there
+        if space_is_free == True:
+            turret = Turret(cursor_turret1, mouse_tile_x, mouse_tile_y)
+            turret_group.add(turret)
 
+def select_turret(mouse_pos):
+    mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
+    mouse_tile_y = mouse_pos[1] // c.TILE_SIZE
+    for turret in turret_group:
+        if (mouse_tile_x, mouse_tile_y) == (turret.tile_x, turret.tile_y):
+            return turret
+
+def clear_selection():
+    for turret in turret_group:
+        turret.selected = False
+
+# create world
+world = World(world_data, space_background)
+world.process_data()
 
 # create groups
 enemy_group = pg.sprite.Group()
 turret_group = pg.sprite.Group()
 
+# create buttons
+heisenberg_button = Button(c.SCREEN_WIDTH + 100, 50, buy_heisenberg_img) 
+cancel_button = Button(c.SCREEN_WIDTH + 50, 180, cancel_button_img) 
 
 planetNeptune = Planet(175, 175, mass=600)
 planetUranus = Planet(275, 325, mass=600)
@@ -106,6 +142,11 @@ while running:
 
     # update groups
     enemy_group.update(celestial_objects)
+    turret_group.update(enemy_group)
+
+    # highlighting slected turret
+    if selected_turret:
+        selected_turret.selected = True
 
     # Draw the Earth
     screen.blit(scal_earth, (800, 500))
@@ -128,12 +169,28 @@ while running:
     # Drawing Neptune
     screen.blit(scal_Neptune, (100,100))
 
+    # draw enemy path
     pg.draw.lines(screen, 'black', False, waypoints)
 
     # draw groups
     enemy_group.draw(screen)
-    turret_group.draw(screen)
+    for turret in turret_group:
+        turret.draw(screen)
 
+    # draw buttons
+    # button for placing turrets
+    if heisenberg_button.draw(screen):
+        placing_turrets = True
+    # if placing turrets, show the cancel button
+    if placing_turrets == True:
+        # shower turret under cursor
+        cursor_rect = cursor_turret1.get_rect()
+        cursor_pos = pg.mouse.get_pos()
+        cursor_rect.center = cursor_pos
+        if cursor_pos[0] < c.SCREEN_WIDTH:
+            screen.blit(cursor_turret1, cursor_rect)
+        if cancel_button.draw(screen):
+            placing_turrets = False
 
     #event handler
     for event in pg.event.get():
@@ -145,7 +202,13 @@ while running:
             mouse_pos = pg.mouse.get_pos()
             # check if mouse is within bounds of the screen
             if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
-                create_turret(mouse_pos)
+                # clear selected turret if you click within play area
+                selected_turret = None
+                clear_selection()
+                if placing_turrets == True:
+                    create_turret(mouse_pos)
+                else:
+                    selected_turret = select_turret(mouse_pos)
 
     # Update the display
     pg.display.flip()

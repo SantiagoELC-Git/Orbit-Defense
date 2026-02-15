@@ -80,7 +80,7 @@ class Enemy(pg.sprite.Sprite):
                 if self.movement.length() < self.vel.length():
                     self.target_waypoint += 1
         else:
-            # enemy had reach the end of the path, so we remove it from the game
+            # enemy has reached the end of the path, so we remove it from the game
             self.kill()
 
     def rotate(self):
